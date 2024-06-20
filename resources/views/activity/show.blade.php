@@ -52,6 +52,24 @@
                     บันทึก</button>
             </div>
         </form>
+        <div>
+            <br>
+            <p>
+            <a href="http://localhost:8000/frontend/create/{{$data->a_hashurl}}"> ลงทะเบียนกิจกรรม </a> 
+        </p>
+        <p>
+
+            http://localhost:8000/frontend/create/{{$data->a_hashurl}}
+
+        </p>
+            {{-- &nbsp;&nbsp;&nbsp;<i class="fa-solid fa-copy"></i><br><br> --}} <br>
+               
+
+
+           
+            {!! $img !!} 
+            {{-- <input type="text" value="http://localhost:8000/frontend/activity/{{$data->a_hashurl}}" class="form-control"> --}}
+        </div>
     </div>
 </div>
     
@@ -59,7 +77,9 @@
 @section('script')
 <script>
     flatpickr(".myDate", {
-        "locale":"th"
+        "locale":"th",
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
     });
 </script>
 @endsection

@@ -59,7 +59,10 @@
 @section('script')
 <script>
     flatpickr(".myDate", {
-        "locale":"th"
+        "locale":"th",
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
     });
+
 </script>
 @endsection
