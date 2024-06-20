@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="card-body">
-            <table id="example" class="display nowrap" style="width:100%">
+            <table id="pdf_table" class="display nowrap" style="width:100%">
                 <thead>
                     <tr>
                         <th>ID</th>
