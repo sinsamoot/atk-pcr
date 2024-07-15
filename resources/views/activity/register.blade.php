@@ -30,6 +30,7 @@
                         <th>กิจกรรม</th>
                         <th>วันที่ตรวจ</th>
                         <th>สถานะ</th>
+                        <th>ลำดับ</th>
                         <th>พิมพ์</th>
                     </tr>
                 </thead>
@@ -44,6 +45,7 @@
                             <td>{{ $res->a_name }}</td>
                             <td>{{ $res->exam_date }}</td>
                             <td>{{ $res->reg_status }}</td>
+                            <td>{{ $res->reg_qr }}</td>
                             {{-- <td>
                         @if (!isset($res->exam_result))
                             <span class="text-warning">ไม่มีผลผลตรวจ</span>
