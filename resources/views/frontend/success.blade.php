@@ -4,8 +4,9 @@
         <div class="card-body text-center">
             <h1>
                 <i class="fa-solid fa-check-circle text-success"></i>
-                คุณ {{ $aid->a_name}} 
-                ลงทะเบียนสำเร็จแล้ว
+                คุณ {{ $visitor}} 
+                ลงทะเบียนกิจกรรม <br>
+                 {{ $aid->a_name}} สำเร็จแล้ว
             </h1><br>
             <h3>
                 <p> กรุณามาตรวจ ATK/PCR<br>

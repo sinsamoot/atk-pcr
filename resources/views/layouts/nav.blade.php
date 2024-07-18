@@ -14,6 +14,9 @@
             <a class="nav-link" href="{{route('activity.index')}}">รายการกิจกรรม</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="{{url('activity/que')}}">จัดเรียงชุดส่งตรวจ</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="{{route('register.index')}}">ทะเบียนผู้ร่วมกิจกรรม</a>
           </li>
           <li class="nav-item">

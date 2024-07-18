@@ -56,8 +56,9 @@ class FrontendController extends Controller
         );
 
         $aid = DB::table('activity')->where('a_id',$id)->first() ;
+        $visitor = $request->reg_visitor;
 
-        return view('frontend.success',['aid'=>$aid])->with('success','บันทึกสำเร็จ'.$request->a_name);
+        return view('frontend.success',['aid'=>$aid,'visitor'=>$visitor]);
     }
 
   

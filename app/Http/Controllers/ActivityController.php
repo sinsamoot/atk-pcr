@@ -73,12 +73,19 @@ class ActivityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
-
         $data = DB::table('activity')->where('a_id', $id)->first();
-        $img = QrCode::size(300)->generate('https://8785-61-19-145-132.ngrok-free.app/frontend/create/' . $data->a_hashurl);
-        return view('activity.show', ['data' => $data, 'img' => $img]);
+        $url = "http://".$request->server('HTTP_HOST')."/frontend/create/" . $data->a_hashurl;
+        $qrCodes = [];
+        $qrCodes['simple'] = QrCode::size(300)->generate($url);
+
+        // $host = $request->server('HTTP_HOST');
+
+        // $url = $host."/frontend/create/" . $data->a_hashurl;
+
+        // $img = QrCode::size(300)->generate($url);
+        return view('activity.show', ['data' => $data,'url'=>$url],$qrCodes);
     }
 
     /**
@@ -130,6 +137,7 @@ class ActivityController extends Controller
         $result = DB::table('activity')
             ->join('register', 'activity_a_id', '=', 'a_id')
             ->where('a_id', $id)
+            ->orderBy('reg_qr','asc')
             ->get();
         return view('activity.register', ['result' => $result]);
     }
@@ -141,13 +149,12 @@ class ActivityController extends Controller
             ->where('reg_id', $id)
             ->first();
         
-        $count = DB::table('register')
-            ->select(DB::raw('count(reg_qr) as que_count'))
-            ->where('reg_id', $id)
-            ->where('activity_a_id', $data->activity_a_id)
-            ->count();
+        // $count = DB::table('register')
+        //     ->select(DB::raw('count(reg_qr) as que_count'))
+        //     ->where('reg_id', $id)
+        //     ->where('activity_a_id', $data->activity_a_id)
+        //     ->count();
 
-            dd($count);
         // DB::table('register')->where('reg_id', $id)->update(
         //     [
         //         'reg_status' => 'พิมพ์แล้ว',
@@ -159,12 +166,44 @@ class ActivityController extends Controller
         // $img = QrCode::size(300)->generate('https://8785-61-19-145-132.ngrok-free.app/frontend/create/' . $data->a_hashurl);
 
         $generatorPNG = new \Picqer\Barcode\BarcodeGeneratorPNG();
-        $img = $generatorPNG->getBarcode($id, $generatorPNG::TYPE_CODE_128);
+        $img = $generatorPNG->getBarcode($data->activity_a_id.'-'.$id, $generatorPNG::TYPE_CODE_128);
 
         return view('activity.rprint', [
             'data' => $data,
             'img'=> $img
         ]);
         // return back()->with('success','พิมพ์ลาเบลแล้ว',['data' => $data]);
+    }
+
+    public function queupdate(Request $request){
+       
+        $arr = explode('-',$request->barcode);
+       
+        $data = DB::table('register')
+        ->where('activity_a_id',$arr[0])
+        ->max('reg_qr');
+
+        if ($data==0){
+            $data=1;
+        }
+
+        $owner_reg_qr = DB::table('register')
+        ->select('reg_qr')
+        ->where('activity_a_id',$arr[0])
+        ->where('reg_id',$arr[1])
+        ->first();
+
+        $sql = "UPDATE register SET reg_qr=reg_qr-1 
+        WHERE activity_a_id=$arr[0] AND reg_qr>".$owner_reg_qr->reg_qr;
+        DB::select($sql);
+
+        DB::table('register')
+        ->where('activity_a_id',$arr[0])
+        ->where('reg_id',$arr[1])
+        ->update([
+            'reg_qr'=>$data
+        ]);
+
+            return back()->with('success','ยิง Barcode สำเร็จ');
     }
 }

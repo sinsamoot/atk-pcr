@@ -36,7 +36,7 @@
                         <tr>
                             <td style="width:5%"></td>
                             <td>
-                                    ID: {{ $data->reg_id }} <br>
+                                    AID-ID: {{ $data->activity_a_id}}-{{$data->reg_id }} <br>
                                     คุณ  {{ $data->reg_visitor }} <br>
                                     วันที่ {{ DateThai($data->reg_date) }} <br><br>
                                     @php $image = base64_encode($img); @endphp

@@ -54,21 +54,18 @@
             </form>
             <div>
                 <br>
-                <p>
-                    <a href="https://8785-61-19-145-132.ngrok-free.app/frontend/create/{{ $data->a_hashurl }}">
-                        ลงทะเบียนกิจกรรม </a>
-                </p>
-                <p>
 
-                    https://8785-61-19-145-132.ngrok-free.app/frontend/create/{{ $data->a_hashurl }}
-
+                <p>
+                    {{$url}}
                 </p>
                 {{-- &nbsp;&nbsp;&nbsp;<i class="fa-solid fa-copy"></i><br><br> --}} <br>
 
 
 
 
-                {!! $img !!}
+                <p id="container" >{!! $simple !!}</p>
+                    <button id="download" class="mt-2 btn btn-dark btn-sm" onclick="downloadSVG()">Download SVG</button><br>
+                    <input type="hidden" id="a_hashurl" class="form-control text-center" value="{{ $data->a_hashurl }}" @readonly(true)>
                 
                 {{-- <input type="text" value="https://8785-61-19-145-132.ngrok-free.app/frontend/activity/{{$data->a_hashurl}}" class="form-control"> --}}
             </div>
@@ -82,5 +79,16 @@
             enableTime: true,
             dateFormat: "Y-m-d H:i",
         });
+
+        function downloadSVG() {
+        const svg = document.getElementById('container').innerHTML;
+        const blob = new Blob([svg.toString()]);
+        const element = document.createElement("a");
+        var value = document.getElementById('a_hashurl').value;
+        element.download = value + ".svg";
+        element.href = window.URL.createObjectURL(blob);
+        element.click();
+        element.remove();
+    }
     </script>
 @endsection

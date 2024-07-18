@@ -27,6 +27,11 @@ Route::prefix('activity')->group(function (){
     Route::get('/', [ActivityController::class, 'index'])->middleware(['auth', 'verified'])->name('activity.index');
     Route::get('/create', [ActivityController::class, 'create'])->middleware(['auth', 'verified'])->name('activity.create');
     Route::post('/store', [ActivityController::class, 'store'])->middleware(['auth', 'verified'])->name('activity.store');
+    Route::post('/queupdate', [ActivityController::class, 'queupdate'])->middleware(['auth', 'verified'])->name('activity.queupdate');
+    Route::get('/que', function () {
+        return view('activity.que');
+    });
+
     Route::get('/destroy/{id}', [ActivityController::class, 'destroy'])->middleware(['auth', 'verified'])->name('activity.destroy');
     Route::get('/view/{id}', [ActivityController::class, 'show'])->middleware(['auth', 'verified'])->name('activity.show');
     Route::post('/update/{id}', [ActivityController::class, 'update'])->middleware(['auth', 'verified'])->name('activity.update');
